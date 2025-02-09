@@ -12,6 +12,18 @@ import {
 } from "fabric";
 import BG from './assets/bg.webp'
 import {useMagicKeys} from '@vueuse/core'
+import RectSvg from './assets/rect.svg'
+import CircleSvg from './assets/circle.svg'
+import ArrowSvg from './assets/arrow.svg'
+import LineSvg from './assets/line.svg'
+import BackSvg from './assets/back.svg'
+import EraserSvg from './assets/eraser.svg'
+import TextSvg from './assets/text.svg'
+import MosaicSvg from './assets/mosaic.svg'
+import SaveSvg from './assets/save.svg'
+import CopySvg from './assets/copy.svg'
+import CloseSvg from './assets/close.svg'
+import PinSvg from './assets/pin.svg'
 
 const predefineColors = ref([
   '#ff4500',
@@ -201,16 +213,18 @@ function drawObjMouseDown(e) {
   switch (currentObj.value) {
     case "Rect":
       currentObjRef.value = new Rect({
-        fill: currentColor.value,
+        fill: 'transparent',
         stroke: currentColor.value,
+        strokeWidth: 2,
         left: e.viewportPoint.x,
         top: e.viewportPoint.y,
       })
       break;
     case "Circle":
       currentObjRef.value = new Circle({
-        fill: currentColor.value,
+        fill: 'transparent',
         stroke: currentColor.value,
+        strokeWidth: 2,
         radius: 0,
         left: e.viewportPoint.x,
         top: e.viewportPoint.y,
@@ -219,9 +233,9 @@ function drawObjMouseDown(e) {
     case "Arrow":
       const points: Point[] = [];
       currentObjRef.value = new Polyline(points, {
-        fill: currentColor.value,
+        fill: 'transparent',
         stroke: currentColor.value,
-        strokeWidth: 1,
+        strokeWidth: 2,
         selectable: false,
         objectCaching: false,
       })
@@ -384,11 +398,51 @@ const actionBarStyle = computed(() => {
     top: `${top}px`,
   };
 })
+
+function selectAction(key: string) {
+  currentObj.value = key;
+}
 </script>
 
 <template>
   <div class="action-bar" :style="actionBarStyle">
     <el-space>
+      <el-button link @click="selectAction('Rect')">
+        <img :src="RectSvg" alt="方形" title="方形" class="action-icon"/>
+      </el-button>
+      <el-button link @click="selectAction('Circle')">
+        <img :src="CircleSvg" alt="圆形" title="圆形" class="action-icon"/>
+      </el-button>
+      <el-button link @click="selectAction('Arrow')">
+        <img :src="ArrowSvg" alt="箭头" title="箭头" class="action-icon"/>
+      </el-button>
+      <el-button link @click="selectAction('Line')">
+        <img :src="LineSvg" alt="直线" title="直线" class="action-icon"/>
+      </el-button>
+      <el-button link>
+        <img :src="MosaicSvg" alt="马赛克" title="马赛克" class="action-icon"/>
+      </el-button>
+      <el-button link>
+        <img :src="TextSvg" alt="文本" title="文本" class="action-icon"/>
+      </el-button>
+      <el-button link>
+        <img :src="EraserSvg" alt="橡皮擦" title="橡皮擦" class="action-icon"/>
+      </el-button>
+      <el-button link>
+        <img :src="BackSvg" alt="撤销" title="撤销" class="action-icon"/>
+      </el-button>
+      <el-button link>
+        <img :src="CloseSvg" alt="退出" title="退出" class="action-icon"/>
+      </el-button>
+      <el-button link>
+        <img :src="PinSvg" alt="置顶" title="置顶" class="action-icon"/>
+      </el-button>
+      <el-button link>
+        <img :src="SaveSvg" alt="保存" title="保存" class="action-icon"/>
+      </el-button>
+      <el-button link>
+        <img :src="CopySvg" alt="复制" title="复制" class="action-icon"/>
+      </el-button>
       <el-color-picker v-model="currentColor" show-alpha :predefine="predefineColors"/>
     </el-space>
   </div>
@@ -397,8 +451,16 @@ const actionBarStyle = computed(() => {
 
 <style scoped>
 .action-bar {
-  padding-top: 20px;
+  margin-top: 20px;
+  padding: 0 10px;
+  background: white;
   position: absolute;
   z-index: 1
+}
+
+.action-icon {
+  color: white;
+  width: 18px;
+  height: 18px;
 }
 </style>
