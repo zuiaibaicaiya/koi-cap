@@ -402,6 +402,26 @@ const actionBarStyle = computed(() => {
 function selectAction(key: string) {
   currentObj.value = key;
 }
+
+function exportPng() {
+  if (fabricRef.value) {
+    const dataURL = fabricRef.value.toDataURL({
+      format: 'png',
+      enableRetinaScaling: true,
+      multiplier: 1,
+      left: maskClipPathController.left,
+      top: maskClipPathController.top,
+      width: maskClipPathController.width,
+      height: maskClipPathController.height,
+    });
+    const link = document.createElement('a');
+    link.href = dataURL;
+    link.download = `${new Date().getTime()}.png`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+}
 </script>
 
 <template>
@@ -437,7 +457,7 @@ function selectAction(key: string) {
       <el-button link>
         <img :src="PinSvg" alt="置顶" title="置顶" class="action-icon"/>
       </el-button>
-      <el-button link>
+      <el-button link @click="exportPng">
         <img :src="SaveSvg" alt="保存" title="保存" class="action-icon"/>
       </el-button>
       <el-button link>
