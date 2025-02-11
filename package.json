@@ -6,7 +6,7 @@
   "main": "dist/electron/main.cjs",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc -b && vite build",
+    "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -30,41 +30,18 @@
     "vue-tsc": "^2.2.0"
   },
   "build": {
-    "asar": false,
-    "productName": "koiBox",
     "icon": "app.png",
+    "productName": "koiBox",
     "directories": {
       "output": "build-electron"
     },
-    "extraResources": [
-      {
-        "from": "plugins",
-        "to": "../plugins"
-      },
-      {
-        "from": "libvlc.dll",
-        "to": "../libvlc.dll"
-      },
-      {
-        "from": "libvlccore.dll",
-        "to": "../libvlccore.dll"
-      }
-    ],
     "files": [
       "!node_modules/**/*",
       "!**/*/{*.ts,*.rs,*.vue}",
       "node_modules/bytenode",
       "node_modules/node-screenshots",
       "node_modules/node-screenshots-win32-x64-msvc",
-      "node_modules/@nestjs/common",
-      "node_modules/@nestjs/core",
-      "node_modules/@nestjs/platform-express",
-      "node_modules/reflect-metadata",
-      "node_modules/rxjs",
-      "node_modules/sqlite3",
-      "koi-player/{index.js,koi-player.win32-x64-msvc.node,package.json}",
-      "dist",
-      "koi-server/dist"
+      "dist"
     ]
   }
 }

@@ -78,6 +78,7 @@ export default ({mode = 'development'}: { mode: string }): Plugin => {
             });
         },
         async closeBundle() {
+            await buildElectron(mode === 'development');
             // 打包
             spawn('electron-builder', {
                 stdio: 'inherit',
