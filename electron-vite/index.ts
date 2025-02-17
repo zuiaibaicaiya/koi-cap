@@ -70,6 +70,11 @@ export default ({mode = 'development'}: { mode: string }): Plugin => {
                         stdio: 'inherit',
                     },
                 );
+                electronProcess.on('exit', () => {
+                    electronProcess.kill();
+                    server.close();
+                    process.exit();
+                });
                 electronProcess.on('close', () => {
                     electronProcess.kill();
                     server.close();
